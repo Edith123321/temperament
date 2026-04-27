@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Our Sister Strengths | Discover Your Light</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e8dccc;  /* warm nude base */
+            font-family: 'Segoe UI', 'Roboto', 'Nunito', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+            color: #3e2a1f;
+            line-height: 1.5;
+            padding: 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* main card container */
+        .quiz-container {
+            max-width: 700px;
+            width: 100%;
+            margin: 1rem auto;
+            background: #fef7e8;   /* soft cream with nude warmth */
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(60, 40, 20, 0.25);
+            overflow: hidden;
+            transition: all 0.2s ease;
+            border: 1px solid #d9c6a7;
+        }
+
+        /* header section */
+        .quiz-header {
+            background: #c6ad8c;
+            padding: 1.2rem 1.8rem;
+            text-align: center;
+            border-bottom: 3px solid #a5835e;
+        }
+
+        .quiz-header h1 {
+            font-size: 1.8rem;
+            letter-spacing: -0.3px;
+            color: #2f241b;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .quiz-header h1 span {
+            background: #f4e5cf;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .sub {
+            color: #2d241c;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            background: #e7d7c0;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 50px;
+        }
+
+        /* progress area */
+        .progress-area {
+            padding: 1rem 1.8rem 0.2rem 1.8rem;
+            background: #fef7e8;
+        }
+
+        .progress-bar-bg {
+            background: #e0cfb6;
+            border-radius: 30px;
+            height: 10px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #b27d4a;
+            width: 0%;
+            height: 100%;
+            border-radius: 30px;
+            transition: width 0.3s ease;
+        }
+
+        .question-counter {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #7c5d3e;
+            margin-top: 0.4rem;
+            font-weight: 500;
+        }
+
+        /* main question area */
+        .question-card {
+            padding: 2rem 1.8rem 1.5rem 1.8rem;
+        }
+
+        .question-text {
+            font-size: 1.65rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            color: #3a2a1b;
+            background: #fff6ea;
+            padding: 1rem 1.2rem;
+            border-radius: 1.5rem;
+            border-left: 8px solid #c6ad8c;
+        }
+
+        /* options grid */
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #e2d0b6;
+            border-radius: 60px;
+            padding: 0.9rem 1.2rem;
+            font-size: 1rem;
+            text-align: left;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #4b3621;
+            background: #fffcf5;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #f3ecdf;
+            border-color: #b48b54;
+            transform: translateX(5px);
+        }
+
+        .option-prefix {
+            font-weight: 800;
+            background: #e9dccd;
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            color: #634e34;
+        }
+
+        /* navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            gap: 1rem;
+        }
+
+        .btn-nav {
+            background: #e1cfb4;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #3e2a1c;
+        }
+
+        .btn-nav.primary {
+            background: #b27d4a;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-nav.primary:hover:not(:disabled) {
+            background: #9b653a;
+            transform: scale(0.97);
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background: #d1bb9a;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* result panel */
+        .result-card {
+            padding: 2rem 1.8rem;
+            text-align: center;
+        }
+
+        .temperament-badge {
+            background: #dcccad;
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1.2rem;
+            color: #2f241b;
+        }
+
+        .strength-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+            color: #654321;
+        }
+
+        .strength-desc {
+            background: #f4ecdf;
+            padding: 1rem;
+            border-radius: 1.5rem;
+            margin: 1.2rem 0;
+            font-size: 1rem;
+        }
+
+        .career-list {
+            background: #fef3e4;
+            border-radius: 1.5rem;
+            padding: 1rem 1.2rem;
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .career-list h3 {
+            font-size: 1.2rem;
+            border-left: 5px solid #b27d4a;
+            padding-left: 0.7rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .career-list ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .career-list li {
+            background: #e5d5bd;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .restart-btn {
+            background: #b27d4a;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: bold;
+            color: white;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 1rem;
+            color: #9c845f;
+            border-top: 1px solid #e3d3bc;
+        }
+
+        @media (max-width: 500px) {
+            body { padding: 0.8rem; }
+            .question-text { font-size: 1.3rem; }
+            .option-btn { padding: 0.7rem 1rem; font-size: 0.9rem; }
+            .strength-title { font-size: 1.8rem; }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="quiz-container" id="quizApp">
+    <div class="quiz-header">
+        <h1>🌸 Our Sister Strengths · discover your light</h1>
+        <div class="sub"> one question at a time · be true to yourself </div>
+    </div>
+
+    <!-- progress & dynamic panels -->
+    <div class="progress-area" id="progressArea">
+        <div class="progress-bar-bg"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="question-counter" id="counterText">Question 1 of 20</div>
+    </div>
+
+    <!-- main dynamic view: questions OR result -->
+    <div id="quizView"></div>
+
+    <footer>Every strength makes our sisterhood shine — no right or wrong answers 🌸</footer>
+</div>
+
+<script>
+    // ---------- QUIZ DATA : 20 QUESTIONS (boarding school / sister context) ----------
+    const QUESTIONS = [
+        { text: "A sister in your dorm looks sad after evening study time. What do you do?", options: ["Sit next to her quietly so she is not alone.", "Gently ask: 'What is making you feel this way?'", "Fold a small paper flower to give her.", "Say: 'You can talk to me anytime, sister.'"] },
+        { text: "During morning chores, one sister forgets her task. What do you do?", options: ["Help her finish her chore without complaining.", "Create a simple checklist for everyone to remember.", "Make a fun song about the chores.", "Remind her kindly in front of no one else."] },
+        { text: "Your teacher gives a group project. Your group cannot decide on an idea. What do you do?", options: ["Ask each sister what she wants.", "Write pros and cons for each idea on paper.", "Suggest combining ideas into something new.", "Speak up: 'Let's vote. I will explain each choice.'"] },
+        { text: "A younger sister struggles to wake up for morning prayer. What do you do?", options: ["Gently wake her and walk with her to the prayer room.", "Think of a better bedtime routine for the dorm.", "Draw a small 'morning sun' picture for her bedside.", "Encourage her: 'You did it yesterday. You can today too.'"] },
+        { text: "During free time in the dorm, what do you most enjoy doing?", options: ["Braiding a sister's hair or helping someone organize her things.", "Reading a book or solving a puzzle quietly.", "Drawing, writing a poem, or making something with thread.", "Telling a story or leading a group game."] },
+        { text: "A sister is crying because she misses home. What do you say or do first?", options: ["Hug her or hold her hand.", "Say: 'What do you miss most? Tell me about it.'", "Draw a picture of something beautiful in our school to show her.", "Say: 'We are your family here. I am with you.'"] },
+        { text: "Your class needs to clean the dining hall after lunch. Where do you help best?", options: ["Making sure every sister has a task so no one is left out.", "Organizing who cleans what, step by step.", "Decorating the cleaning chart with small drawings.", "Cheering everyone on: 'We are almost done, sisters!'"] },
+        { text: "A sister does not understand today's science lesson. What do you do?", options: ["Sit with her and explain slowly, again and again.", "Break the lesson into very small, clear steps.", "Draw a diagram or make a small example.", "Say: 'Let's ask the teacher together. You are not alone.'"] },
+        { text: "Two sisters in your dorm are arguing over a shared book. What do you do?", options: ["Listen to both sides without choosing one.", "Suggest: 'One reads first for 30 minutes, then the other.'", "Offer to write a short story for both of them instead.", "Say: 'Each of you tell me your side. I will help you agree.'"] },
+        { text: "Your teacher asks: 'Who can lead the morning review for everyone?' You feel —", options: ["Ready to help, but only if another sister leads with me.", "Ready to organize the facts clearly.", "Excited to teach the lesson like a short story or song.", "Comfortable speaking in front of all my sisters."] },
+        { text: "Which compliment from a teacher would mean the most to you?", options: ["\"You are so kind to everyone in this dorm.\"", "\"You solve problems very thoughtfully.\"", "\"You make everything more beautiful.\"", "\"You help others find their voice.\""] },
+        { text: "During evening reflection time, a sister shares a worry. What do you do?", options: ["Stay after to check if she is okay.", "Think: 'What could help her feel safer here?'", "Write her an anonymous kind note under her pillow.", "Say in front of the group: 'Thank you for trusting us.'"] },
+        { text: "Your dorm has a free evening with no classes. What activity do you suggest?", options: ["A 'helping circle' where each sister shares one need.", "A chess or riddle competition.", "An art night with drawing and sewing.", "A storytelling circle where everyone speaks."] },
+        { text: "A sister is very quiet and never joins group conversations. What do you do?", options: ["Sit next to her during meals so she feels included.", "Notice what she likes and ask about that.", "Invite her to draw with you instead of talking.", "Tell the group: 'Let's take turns speaking so everyone can share.'"] },
+        { text: "Your sister is afraid to ask the teacher a question. What do you do?", options: ["Go with her to the teacher.", "Help her write the question on paper first.", "Role-play the question with her privately.", "Say: 'Your question is good. I will ask it for you this time.'"] },
+        { text: "The class needs to choose a new dorm representative. What would you be best at?", options: ["Making sure every sister's voice is heard before choosing.", "Writing down fair rules for the representative.", "Making a creative campaign poster for someone.", "Speaking in front of the class to nominate someone."] },
+        { text: "During a school celebration, you are asked to prepare something. What do you offer?", options: ["Organizing the younger sisters so everyone is safe and happy.", "Planning the order of events step by step.", "Making decorations or preparing traditional embroidery.", "Welcoming everyone with a speech or a poem."] },
+        { text: "A sister makes a mistake during a class performance. What do you whisper to her after?", options: ["'It is okay. No one is angry with you.'", "'Next time, try counting the steps slowly.'", "'The mistake actually made it more beautiful.'", "'You were brave to try. I am proud of you.'"] },
+        { text: "Your teacher asks: 'What is one thing you would change about our school?' Your answer shows you are a —", options: ["Helper: 'I would make sure no sister ever eats alone.'", "Thinker: 'I would make a better system for study time.'", "Creator: 'I would paint the walls with hopeful colors.'", "Communicator: 'I would start a weekly sisters' meeting to share ideas.'"] },
+        { text: "Final question: When you think about your future, even if you do not know the details, you hope to be someone who —", options: ["Takes care of others, wherever you are.", "Solves difficult problems with patience.", "Makes things that bring beauty and joy.", "Speaks for those who cannot speak easily."] }
+    ];
+
+    // mapping: Option index 0 -> Helper, 1 -> Thinker, 2 -> Creator, 3 -> Communicator
+    const TYPE_NAMES = ["Helper", "Thinker", "Creator", "Communicator"];
+
+    // MODERN, WHITE-COLLAR, FUTURE-FOCUSED CAREER PATHS
+    // Sorted by original four archetypes (Helper, Thinker, Creator, Communicator)
+    // Minor jobs (tailor, chef, calligrapher) removed - all roles are professional & future-ready
+    const CAREER_PATHS = {
+        Helper: [
+            "Clinical Nurse Specialist",
+            "Mental Health Therapist",
+            "Geriatric Care Manager",
+            "Clinical Social Worker",
+            "HR Business Partner",
+            "Nonprofit Program Director",
+            "Patient Advocacy Manager",
+            "Corporate Social Responsibility Specialist",
+            "Employee Wellness Coordinator",
+            "Genetic Counselor",
+            "Health Data Analyst",
+            "DEI Program Director"
+        ],
+        Thinker: [
+            "Data Scientist",
+            "Software Engineer",
+            "AI/ML Research Scientist",
+            "Physician",
+            "Investment Strategist",
+            "Management Consultant",
+            "Cybersecurity Analyst",
+            "Cloud Solutions Architect",
+            "Actuary",
+            "Supply Chain Strategist",
+            "Financial Analyst",
+            "AI Ethics Officer",
+            "Blockchain Developer",
+            "Operations Research Analyst"
+        ],
+        Creator: [
+            "Creative Director",
+            "UX/UI Designer",
+            "Content Strategist",
+            "Product Designer",
+            "Brand Manager",
+            "Digital Content Producer",
+            "Innovation Lab Lead",
+            "User Researcher",
+            "Narrative Designer",
+            "Intellectual Property Strategist",
+            "Marketing Creative Director"
+        ],
+        Communicator: [
+            "Corporate Communications Manager",
+            "Public Relations Director",
+            "Policy Advisor",
+            "Government Affairs Specialist",
+            "Journalist / Digital Media Editor",
+            "Localization Manager",
+            "Community Organizer",
+            "Learning & Development Specialist",
+            "Brand Spokesperson",
+            "Legal Advocate",
+            "Compliance Officer",
+            "Internal Communications Lead",
+            "Civic Engagement Director"
+        ]
+    };
+
+    const DESCRIPTIONS = {
+        Helper: "You bring warmth and kindness. You notice when someone needs support, and you act with a caring heart. Your sisters feel safe with you. In the professional world, Helpers become leaders in healthcare, human resources, social impact, and wellness — making sure no one is left behind.",
+        Thinker: "You bring wisdom and curiosity. You love to understand how things work and find thoughtful solutions. Your mind lights the way. Thinkers shape the future through technology, finance, engineering, data science, and strategic leadership — solving the world's most complex problems.",
+        Creator: "You bring imagination and beauty. You see the world as a canvas and express feelings through art, words, or design. Creators drive innovation in branding, user experience, digital media, and product design — turning ideas into meaningful experiences.",
+        Communicator: "You bring voice and connection. You speak with courage, listen intently, and inspire others to unite and share. Communicators lead in media, public affairs, corporate communications, and advocacy — building bridges between people and ideas."
+    };
+
+    // Student state
+    let currentIndex = 0;           // 0-based, 0..19
+    let answers = new Array(20).fill(null);   // store chosen type index (0-3) for each question
+    let quizFinished = false;
+
+    const quizView = document.getElementById("quizView");
+    const progressFill = document.getElementById("progressFill");
+    const counterSpan = document.getElementById("counterText");
+
+    // Helper: update progress bar & counter
+    function updateProgress() {
+        const answeredCount = answers.filter(a => a !== null).length;
+        const percent = (answeredCount / QUESTIONS.length) * 100;
+        progressFill.style.width = percent + "%";
+        if (!quizFinished) {
+            counterSpan.innerText = `Question ${currentIndex+1} of ${QUESTIONS.length} (${answeredCount} answered)`;
+        }
+    }
+
+    // render current question or result
+    function render() {
+        if (quizFinished) {
+            renderResult();
+            return;
+        }
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = QUESTIONS[currentIndex];
+        const selectedIdx = answers[currentIndex];
+        const optionsHtml = q.options.map((opt, idx) => {
+            const prefixLetters = ['A', 'B', 'C', 'D'];
+            const isSelected = (selectedIdx === idx);
+            const selectedStyle = isSelected ? 'style="background: #eadbc6; border-color: #b27d4a;"' : '';
+            return `
+                <button class="option-btn" data-opt-index="${idx}" ${selectedStyle}>
+                    <span class="option-prefix">${prefixLetters[idx]}</span>
+                    <span>${escapeHtml(opt)}</span>
+                </button>
+            `;
+        }).join('');
+
+        const html = `
+            <div class="question-card">
+                <div class="question-text">${escapeHtml(q.text)}</div>
+                <div class="options-grid" id="optionsGrid">
+                    ${optionsHtml}
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn-nav" id="prevBtn" ${currentIndex === 0 ? 'disabled' : ''}>← Previous</button>
+                    <button class="btn-nav primary" id="nextBtn">${currentIndex === QUESTIONS.length-1 ? 'Finish & See Result' : 'Next →'}</button>
+                </div>
+            </div>
+        `;
+        quizView.innerHTML = html;
+
+        // attach option listeners
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const optIndex = parseInt(btn.dataset.optIndex);
+                answers[currentIndex] = optIndex;
+                updateProgress();
+                renderQuestion(); // re-render to show selected highlight
+            });
+        });
+
+        // prev / next logic
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                render();
+            }
+        });
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+            if (answers[currentIndex] === null) {
+                alert("Choose an answer that feels like you. Every choice helps you discover your light 💛");
+                return;
+            }
+            if (currentIndex === QUESTIONS.length - 1) {
+                if (answers.some(a => a === null)) {
+                    alert("Please answer all questions before seeing your result. You're almost there!");
+                    return;
+                }
+                quizFinished = true;
+                render();
+            } else {
+                currentIndex++;
+                render();
+            }
+        });
+        updateProgress();
+    }
+
+    // compute dominant type(s) and show result
+    function computeDominantType() {
+        let counts = [0,0,0,0]; // Helper, Thinker, Creator, Communicator
+        for (let ans of answers) {
+            if (ans !== null) counts[ans]++;
+        }
+        let maxVal = Math.max(...counts);
+        let dominantIndices = [];
+        for (let i=0; i<counts.length; i++) {
+            if (counts[i] === maxVal && maxVal > 0) dominantIndices.push(i);
+        }
+        return { dominantIndices, counts };
+    }
+
+    function getIconForType(type) {
+        const icons = {
+            Helper: "🤝",
+            Thinker: "💡",
+            Creator: "🎨",
+            Communicator: "🗣️"
+        };
+        return icons[type] || "✨";
+    }
+
+    function renderResult() {
+        const { dominantIndices, counts } = computeDominantType();
+        const primaryTypeIdx = dominantIndices[0];
+        const primaryType = TYPE_NAMES[primaryTypeIdx];
+        const icon = getIconForType(primaryType);
+      
+        const description = DESCRIPTIONS[primaryType];
+        const careers = CAREER_PATHS[primaryType];
+        
+        let additionalMessage = "";
+        if (dominantIndices.length > 1) {
+            const secondType = TYPE_NAMES[dominantIndices[1]];
+            additionalMessage = `<p style="margin-top: 0.5rem; font-style:italic;">✨ You also shine as a <strong>${secondType}</strong> — you carry two beautiful strengths! ✨</p>`;
+        }
+        
+        const careerItems = careers.map(c => `<li>${escapeHtml(c)}</li>`).join('');
+        
+        const resultHtml = `
+            <div class="result-card">
+                <div class="temperament-badge">${icon} Your inner light</div>
+                <div class="strength-title">${primaryType}</div>
+                <div class="strength-desc">
+                    ${description}
+                    ${additionalMessage}
+                </div>
+                <div class="career-list">
+                    <h3> Future-forward career paths that fit your strength</h3>
+                    <ul>${careerItems}</ul>
+                    <p style="font-size:0.8rem; margin-top:0.8rem; color:#7c5d3e;">💡 These are modern, white-collar roles in growing industries. Your future is wide open, sister.</p>
+                </div>
+                <button class="restart-btn" id="restartQuizBtn">⟳ Take the quiz again</button>
+                <p style="font-size:0.75rem; margin-top: 1rem;">🌸 Remember: you can grow all strengths over time — this is who you are today.</p>
+            </div>
+        `;
+        quizView.innerHTML = resultHtml;
+        document.getElementById('restartQuizBtn')?.addEventListener('click', () => {
+            answers = new Array(20).fill(null);
+            currentIndex = 0;
+            quizFinished = false;
+            updateProgress();
+            render();
+        });
+        progressFill.style.width = "100%";
+        counterSpan.innerText = `Completed! Your strength revealed 🌸`;
+    }
+
+    // simple escape util
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // initial render
+    render();
+    updateProgress();
+</script>
+</body>
+</html>
